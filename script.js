@@ -1,4 +1,23 @@
 var originalPositions = {};
+var imageCount = 0;
+var totalImages = $(".movableImg, body").length;
+
+function imageLoaded() {
+    imageCount++;
+    if (imageCount === totalImages) {
+        setTimeout(function () {
+            takeScreenshot();
+        }, 500); 
+    }
+}
+
+$(".movableImg, body").on("load", function () {
+    imageLoaded();
+});
+
+$(document).ready(function () {
+    imageLoaded();
+});
 
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -44,21 +63,12 @@ function resetPositions() {
 
 function takeScreenshot() {
     html2canvas(document.getElementById("mBody")).then(function (canvas) {
-        var backgroundCanvas = document.createElement('canvas');
-        backgroundCanvas.width = canvas.width;
-        backgroundCanvas.height = canvas.height;
-        var backgroundContext = backgroundCanvas.getContext('2d');
-
-        var backgroundImg = new Image();
-        backgroundImg.src = $("body").css('background-image').replace(/url\(['"]?(.*?)['"]?\)/i, "$1");
-        backgroundContext.drawImage(backgroundImg, 0, 0, backgroundCanvas.width, backgroundCanvas.height);
-
         var combinedCanvas = document.createElement('canvas');
-        combinedCanvas.width = canvas.width;
-        combinedCanvas.height = canvas.height;
+        combinedCanvas.width = $(document).width();
+        combinedCanvas.height = $(document).height();
         var combinedContext = combinedCanvas.getContext('2d');
 
-        combinedContext.drawImage(backgroundCanvas, 0, 0);
+        combinedContext.drawImage(canvas, 0, 0);
 
         $(".movableImg").each(function () {
             var rect = this.getBoundingClientRect();
