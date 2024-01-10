@@ -1,3 +1,5 @@
+var originalPositions = {}; 
+
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     elmnt.onmousedown = dragMouseDown;
@@ -29,27 +31,19 @@ function dragElement(elmnt) {
     }
 }
 
-function resetPositions() {
+function storeOriginalPositions() {
     $(".movableImg").each(function() {
-        this.style.top = "";
-        this.style.left = "";
+        originalPositions[this.id] = { top: this.style.top, left: this.style.left };
     });
 }
 
-$(document).ready(function() {
+function resetPositions() {
     $(".movableImg").each(function() {
-        dragElement(this);
+        var originalPosition = originalPositions[this.id];
+        this.style.top = originalPosition.top;
+        this.style.left = originalPosition.left;
     });
-
-    $("#resetButton").click(function() {
-        resetPositions();
-    });
-
-    $("#saveButton").click(function() {
-        takeScreenshot();
-    });
-});
-
+}
 
 function takeScreenshot() {
     html2canvas(document.getElementById("mBody")).then(function(canvas) {
@@ -64,6 +58,12 @@ function takeScreenshot() {
 $(document).ready(function() {
     $(".movableImg").each(function() {
         dragElement(this);
+    });
+
+    storeOriginalPositions(); 
+
+    $("#resetButton").click(function() {
+        resetPositions();
     });
 
     $("#saveButton").click(function() {
