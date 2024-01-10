@@ -1,23 +1,4 @@
 var originalPositions = {};
-var imageCount = 0;
-var totalImages = $(".movableImg, body").length;
-
-function imageLoaded() {
-    imageCount++;
-    if (imageCount === totalImages) {
-        setTimeout(function () {
-            takeScreenshot();
-        }, 500); 
-    }
-}
-
-$(".movableImg, body").on("load", function () {
-    imageLoaded();
-});
-
-$(document).ready(function () {
-    imageLoaded();
-});
 
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -25,6 +6,7 @@ function dragElement(elmnt) {
 
     function dragMouseDown(e) {
         e.preventDefault();
+
         pos3 = e.clientX;
         pos4 = e.clientY;
         document.onmouseup = closeDragElement;
@@ -33,10 +15,12 @@ function dragElement(elmnt) {
 
     function elementDrag(e) {
         e.preventDefault();
+
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
+
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
@@ -63,22 +47,10 @@ function resetPositions() {
 
 function takeScreenshot() {
     html2canvas(document.getElementById("mBody")).then(function (canvas) {
-        var combinedCanvas = document.createElement('canvas');
-        combinedCanvas.width = $(document).width();
-        combinedCanvas.height = $(document).height();
-        var combinedContext = combinedCanvas.getContext('2d');
-
-        combinedContext.drawImage(canvas, 0, 0);
-
-        $(".movableImg").each(function () {
-            var rect = this.getBoundingClientRect();
-            combinedContext.drawImage(canvas, rect.left, rect.top, rect.width, rect.height, rect.left, rect.top, rect.width, rect.height);
-        });
-
-        var imgData = combinedCanvas.toDataURL('image/png');
+        var imgData = canvas.toDataURL('image/png');
         var a = document.createElement('a');
         a.href = imgData;
-        a.download = 'FinalLook';
+        a.download = 'DressUp';
         a.click();
     });
 }
@@ -92,6 +64,7 @@ function changeBackground() {
         $("body").css('background-image', 'url(' + backgrounds[currentBackground] + ')');
     });
 }
+
 
 $(document).ready(function () {
     $(".movableImg").each(function () {
