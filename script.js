@@ -6,7 +6,6 @@ function dragElement(elmnt) {
 
     function dragMouseDown(e) {
         e.preventDefault();
-
         pos3 = e.clientX;
         pos4 = e.clientY;
         document.onmouseup = closeDragElement;
@@ -15,12 +14,10 @@ function dragElement(elmnt) {
 
     function elementDrag(e) {
         e.preventDefault();
-
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
-
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
     }
@@ -47,24 +44,31 @@ function resetPositions() {
 
 function takeScreenshot() {
     html2canvas(document.getElementById("mBody")).then(function (canvas) {
-        var combinedCanvas = document.createElement('canvas');
-        combinedCanvas.width = canvas.width;
-        combinedCanvas.height = canvas.height;
-        var context = combinedCanvas.getContext('2d');
+        var backgroundCanvas = document.createElement('canvas');
+        backgroundCanvas.width = canvas.width;
+        backgroundCanvas.height = canvas.height;
+        var backgroundContext = backgroundCanvas.getContext('2d');
 
         var backgroundImg = new Image();
         backgroundImg.src = $("body").css('background-image').replace(/url\(['"]?(.*?)['"]?\)/i, "$1");
-        context.drawImage(backgroundImg, 0, 0, combinedCanvas.width, combinedCanvas.height);
+        backgroundContext.drawImage(backgroundImg, 0, 0, backgroundCanvas.width, backgroundCanvas.height);
+
+        var combinedCanvas = document.createElement('canvas');
+        combinedCanvas.width = canvas.width;
+        combinedCanvas.height = canvas.height;
+        var combinedContext = combinedCanvas.getContext('2d');
+
+        combinedContext.drawImage(backgroundCanvas, 0, 0);
 
         $(".movableImg").each(function () {
             var rect = this.getBoundingClientRect();
-            context.drawImage(canvas, rect.left, rect.top, rect.width, rect.height, rect.left, rect.top, rect.width, rect.height);
+            combinedContext.drawImage(canvas, rect.left, rect.top, rect.width, rect.height, rect.left, rect.top, rect.width, rect.height);
         });
 
         var imgData = combinedCanvas.toDataURL('image/png');
         var a = document.createElement('a');
         a.href = imgData;
-        a.download = 'DressUp';
+        a.download = 'FinalLook';
         a.click();
     });
 }
