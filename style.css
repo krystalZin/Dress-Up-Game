@@ -1,0 +1,48 @@
+/* Problem 1 */
+body {
+    color: peru;
+}
+
+@font-face {
+    font-family: 'Acme';
+    src: url(https://fonts.gstatic.com/s/acme/v9/RrQfboBx-C5_XxrBbg.woff2) format('woff2');
+}
+
+h1, h5 {
+    text-align: center;
+    margin: 0%;
+    font-family: 'Acme';
+}
+
+#mBody {
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.movableImg {
+    position: absolute;
+}
+
+#saveButton {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px; 
+    background-color: peru; 
+    color: white; 
+    font-size: 16px; 
+    border: none;
+    cursor: pointer;
+}
+
+/* Problem 2 */
+#revert {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+    display: none;
+    width: 100px;
+}
