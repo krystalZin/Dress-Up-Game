@@ -1,6 +1,10 @@
 body {
-    color: palevioletred;
+    color: black;
     background-color: beige;
+    /* background-image: url('images/background.png'); */
+    background-size: fit; 
+    background-position: center; 
+    background-repeat: no-repeat;
 }
 
 @font-face {
@@ -23,6 +27,17 @@ h1, h5 {
 
 .movableImg {
     position: absolute;
+}
+
+#resetButton {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px; 
+    background-color: palevioletred; 
+    color: white; 
+    font-size: 16px; 
+    border: none;
+    cursor: pointer;
 }
 
 #saveButton {
