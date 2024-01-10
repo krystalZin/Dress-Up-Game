@@ -47,7 +47,21 @@ function resetPositions() {
 
 function takeScreenshot() {
     html2canvas(document.getElementById("mBody")).then(function (canvas) {
-        var imgData = canvas.toDataURL('image/png');
+        var combinedCanvas = document.createElement('canvas');
+        combinedCanvas.width = canvas.width;
+        combinedCanvas.height = canvas.height;
+        var context = combinedCanvas.getContext('2d');
+
+        var backgroundImg = new Image();
+        backgroundImg.src = $("body").css('background-image').replace(/url\(['"]?(.*?)['"]?\)/i, "$1");
+        context.drawImage(backgroundImg, 0, 0, combinedCanvas.width, combinedCanvas.height);
+
+        $(".movableImg").each(function () {
+            var rect = this.getBoundingClientRect();
+            context.drawImage(canvas, rect.left, rect.top, rect.width, rect.height, rect.left, rect.top, rect.width, rect.height);
+        });
+
+        var imgData = combinedCanvas.toDataURL('image/png');
         var a = document.createElement('a');
         a.href = imgData;
         a.download = 'DressUp';
@@ -64,7 +78,6 @@ function changeBackground() {
         $("body").css('background-image', 'url(' + backgrounds[currentBackground] + ')');
     });
 }
-
 
 $(document).ready(function () {
     $(".movableImg").each(function () {
