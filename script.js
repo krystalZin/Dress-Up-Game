@@ -50,7 +50,7 @@ function takeScreenshot() {
         var imgData = canvas.toDataURL('image/png');
         var a = document.createElement('a');
         a.href = imgData;
-        a.download = 'DressUp';
+        a.download = 'FinalLook';
         a.click();
     });
 }
