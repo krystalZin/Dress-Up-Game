@@ -1,4 +1,4 @@
-var originalPositions = {}; 
+var originalPositions = {};
 
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -32,13 +32,13 @@ function dragElement(elmnt) {
 }
 
 function storeOriginalPositions() {
-    $(".movableImg").each(function() {
+    $(".movableImg").each(function () {
         originalPositions[this.id] = { top: this.style.top, left: this.style.left };
     });
 }
 
 function resetPositions() {
-    $(".movableImg").each(function() {
+    $(".movableImg").each(function () {
         var originalPosition = originalPositions[this.id];
         this.style.top = originalPosition.top;
         this.style.left = originalPosition.left;
@@ -46,27 +46,40 @@ function resetPositions() {
 }
 
 function takeScreenshot() {
-    html2canvas(document.getElementById("mBody")).then(function(canvas) {
+    html2canvas(document.getElementById("mBody")).then(function (canvas) {
         var imgData = canvas.toDataURL('image/png');
         var a = document.createElement('a');
         a.href = imgData;
-        a.download = 'mr_potato_head.png';
+        a.download = 'DressUp';
         a.click();
     });
 }
 
-$(document).ready(function() {
-    $(".movableImg").each(function() {
+function changeBackground() {
+    var backgrounds = ['images/background1.png','images/background2.png', 'images/background3.png'];
+    var currentBackground = 0;
+
+    $("#backgroundButton").click(function () {
+        currentBackground = (currentBackground + 1) % backgrounds.length;
+        $("body").css('background-image', 'url(' + backgrounds[currentBackground] + ')');
+    });
+}
+
+
+$(document).ready(function () {
+    $(".movableImg").each(function () {
         dragElement(this);
     });
 
-    storeOriginalPositions(); 
+    storeOriginalPositions();
 
-    $("#resetButton").click(function() {
+    $("#resetButton").click(function () {
         resetPositions();
     });
 
-    $("#saveButton").click(function() {
+    $("#saveButton").click(function () {
         takeScreenshot();
     });
+
+    changeBackground(); 
 });

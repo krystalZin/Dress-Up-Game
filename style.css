@@ -1,7 +1,7 @@
 body {
     color: black;
     background-color: beige;
-    /* background-image: url('images/background.png'); */
+    background-image: url('images/background1.png');
     background-size: fit; 
     background-position: center; 
     background-repeat: no-repeat;
@@ -23,7 +23,7 @@ h1, h5 {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 150px;
+    margin-bottom: 110px;
 }
 
 .movableImg {
@@ -39,7 +39,18 @@ h1, h5 {
     font-size: 16px; 
     border: none;
     cursor: pointer;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+}
+#backgroundButton {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px; 
+    background-color: palevioletred; 
+    color: white; 
+    font-size: 16px; 
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 #saveButton {
